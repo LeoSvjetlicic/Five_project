@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Five_project</string>
+    <string name="followed_screen">Followed Competitions</string>
+    <string name="team">Team</string>
+    <string name="position">Pos</string>
+    <string name="points">Pts</string>
+    <string name="description">Description</string>
+    <string name="members">Members</string>
+    <string name="competitions">Competitions</string>
+    <string name="home">Home</string>
+    <string name="followed">Followed</string>
+
+</resources>
