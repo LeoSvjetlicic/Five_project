@@ -11,7 +11,7 @@ val competitionDetailsModule = module {
         CompetitionDetailsViewModel(
             competitionRepository = get(),
             competitionDetailsMapper = get(),
-            competitionId = it.get()
+            competition = it.get()
         )
     }
     single<CompetitionDetailsMapper> { CompetitionDetailsMapperImpl() }

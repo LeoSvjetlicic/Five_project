@@ -1,8 +1,7 @@
 package agency.five.codebase.android.five_project.ui.followed
 
-import agency.five.codebase.android.five_project.data.repository.CompetitionRepository
+import agency.five.codebase.android.five_project.data.competitionRepository.CompetitionRepository
 import agency.five.codebase.android.five_project.ui.followed.mapper.FollowedMapper
-import agency.five.codebase.android.five_project.ui.home.HomeScreenListViewState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*

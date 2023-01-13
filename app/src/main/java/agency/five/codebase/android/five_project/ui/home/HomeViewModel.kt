@@ -1,8 +1,6 @@
 package agency.five.codebase.android.five_project.ui.home
 
-import agency.five.codebase.android.five_project.data.repository.CompetitionRepository
-import agency.five.codebase.android.five_project.mock.Mock
-import agency.five.codebase.android.five_project.ui.competitiondetails.di.competitionDetailsModule
+import agency.five.codebase.android.five_project.data.competitionRepository.CompetitionRepository
 import agency.five.codebase.android.five_project.ui.home.mapper.HomeScreenMapper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

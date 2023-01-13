@@ -10,6 +10,7 @@ import agency.five.codebase.android.five_project.ui.home.HomeScreenRoute
 import agency.five.codebase.android.five_project.ui.home.HomeViewModel
 import agency.five.codebase.android.five_project.ui.teamdetails.TeamDetailsRoute
 import agency.five.codebase.android.five_project.ui.teamdetails.TeamDetailsViewModel
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,6 +38,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.firebase.FirebaseApp
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -53,9 +55,6 @@ fun MainScreen() {
             }
         }
     }
-    val homeViewModel = getViewModel<HomeViewModel>()
-    val followedViewModel = getViewModel<FollowedScreenViewModel>()
-
     Scaffold(
         topBar = {
             TopBar(onImageClick = {
@@ -97,20 +96,20 @@ fun MainScreen() {
                     HomeScreenRoute(
                         onCompetitionCardClick = {
                             navController.navigate(
-                                CompetitionDetailsDestination.createNavigationRoute(1)
+                                CompetitionDetailsDestination.createNavigationRoute(it)
                             )
                         },
-                        homeViewModel = homeViewModel
+                        homeViewModel = getViewModel()
                     )
                 }
                 composable(NavigationItem.FollowedDestination.route) {
                     FollowedScreenRoute(
                         onCompetitionCardClick = {
                             navController.navigate(
-                                CompetitionDetailsDestination.createNavigationRoute(1)
+                                CompetitionDetailsDestination.createNavigationRoute(it)
                             )
                         },
-                        followedScreenViewModel = followedViewModel
+                        followedScreenViewModel = getViewModel()
                     )
                 }
                 composable(
@@ -125,7 +124,7 @@ fun MainScreen() {
                     CompetitionDetailsRoute(
                         onTeamCardClick = {
                             navController.navigate(
-                                TeamDetailsDestination.createNavigationRoute(1)
+                                TeamDetailsDestination.createNavigationRoute(it.id.toInt())
                             )
                         },
                         viewModel = viewModel
@@ -140,7 +139,7 @@ fun MainScreen() {
                         getViewModel<TeamDetailsViewModel>(parameters = {
                             parametersOf(teamId)
                         })
-                    TeamDetailsRoute()
+                    TeamDetailsRoute(viewModel)
                 }
             }
         }
@@ -216,10 +215,4 @@ fun RowScope.AddItem(
         selected = currentDestination?.route == destination.route,
         onClick = { onNavigateToDestination(destination) }
     )
-}
-
-@Preview
-@Composable
-fun prew(){
-    MainScreen()
 }

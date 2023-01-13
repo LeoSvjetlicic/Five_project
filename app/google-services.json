@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "146663622316",
+    "project_id": "footballorganiser",
+    "storage_bucket": "footballorganiser.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146663622316:android:db0ad3fdfb97a2548c0109",
+        "android_client_info": {
+          "package_name": "agency.five.codebase.android.five_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "146663622316-es8t612oka9dvageohasegcg8gcnm9df.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1V-yHB5hwWJ5DFBy3r0iRLA5LKleaQxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "146663622316-es8t612oka9dvageohasegcg8gcnm9df.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

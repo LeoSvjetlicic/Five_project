@@ -12,6 +12,7 @@ object Mock {
             imageUrl = "https://pbs.twimg.com/profile_images/1501988258078674950/_5xMT_RA_400x400.jpg",
             isRightFooted = true,
             number = 10,
+            teamId = "34"
         )
     }
 
@@ -22,11 +23,12 @@ object Mock {
             imageUrl = "https://www.realmadrid.com/img/horizontal_940px/_5am0781_horizontal.jpg",
             position = 2,
             numberOfPoints = 27,
-            description = "One of the greates football teams ever. \nThey won Club World Cup, LaLiga title, THE CHAMPIONS LEAGUE and UEFA & Spanish SuperCup"
+            description = "One of the greates football teams ever. \nThey won Club World Cup, LaLiga title, THE CHAMPIONS LEAGUE and UEFA & Spanish SuperCup",
+            league = "afaf"
         )
     }
 
-    fun getTeamDetails(teamId:Int) = TeamDetails(
+    fun getTeamDetails(team:Team) = TeamDetails(
         team = getTeams()[0],
         members = getMembers(),
     )
@@ -88,9 +90,9 @@ object Mock {
         ),
     )
 
-    fun getCompetitionDetails(competitionId: Int) =
+    fun getCompetitionDetails(competition: Competition) =
         CompetitionDetails(
-            competition = getCompetitionsList()[competitionId],
+            competition = competition,
             teams = getTeams(),
         )
 }

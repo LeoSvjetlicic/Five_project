@@ -48,7 +48,7 @@ fun TeamCard(
             .height(70.dp)
             .shadow(elevation = 5.dp, shape = RoundedCornerShape(10.dp)),
         border = BorderStroke(
-            4.dp,
+            2.dp,
             brush = Brush.horizontalGradient(
                 colors = listOf(
                     colorResource(id = R.color.dark_blue),

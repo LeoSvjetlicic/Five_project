@@ -11,9 +11,9 @@ import org.koin.dsl.module
 val teamDetailsModule = module {
     viewModel {
         TeamDetailsViewModel(
-            competitionRepository = get(),
+            teamRepository = get(),
             mapper = get(),
-            teamId = it.get()
+            team = it.get()
         )
     }
     single<TeamDetailsMapper> { TeamDetailsMapperImpl() }

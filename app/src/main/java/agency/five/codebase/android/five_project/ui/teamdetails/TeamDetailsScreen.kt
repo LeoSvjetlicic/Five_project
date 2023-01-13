@@ -31,8 +31,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun TeamDetailsRoute(
     teamDetailsViewModel: TeamDetailsViewModel = viewModel(),
-    modifier: Modifier = Modifier
-) {
+    modifier: Modifier = Modifier,
+
+    ) {
     val teamDetailsViewState by teamDetailsViewModel.teamDetailsViewState.collectAsState()
     TeamDetailScreen(
         teamDetailsViewState = teamDetailsViewState,
@@ -44,7 +45,6 @@ fun TeamDetailsRoute(
 fun TeamDetailScreen(
     teamDetailsViewState: TeamDetailsViewState,
     modifier: Modifier = Modifier,
-    onImageClick: () -> Unit = {}
 ) {
     LazyColumn(
         modifier = modifier
@@ -135,7 +135,6 @@ fun TeamDetailScreen(
                             .padding(5.dp)
                             .fillMaxWidth()
                             .height(100.dp),
-                        onImageClick = onImageClick
                     )
                 }
             }

@@ -3,6 +3,7 @@ package agency.five.codebase.android.five_project.ui.home
 import agency.five.codebase.android.five_project.R
 import agency.five.codebase.android.five_project.mock.Mock
 import agency.five.codebase.android.five_project.ui.components.CompetitionCard
+import agency.five.codebase.android.five_project.ui.components.SearchBar
 import agency.five.codebase.android.five_project.ui.home.mapper.HomeScreenMapper
 import agency.five.codebase.android.five_project.ui.home.mapper.HomeScreenMapperImpl
 import androidx.compose.foundation.background
@@ -24,7 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun HomeScreenRoute(
-    homeViewModel: HomeViewModel = viewModel(),
+    homeViewModel: HomeViewModel ,
     onCompetitionCardClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -33,7 +34,8 @@ fun HomeScreenRoute(
         modifier = modifier,
         competitions = competitionsViewState,
         onCompetitionCardClick = onCompetitionCardClick,
-        onFollowButtonClick = homeViewModel::toggleFollowed
+        onFollowButtonClick = homeViewModel::toggleFollowed,
+        onSearchButtonClick = {}
     )
 }
 
@@ -42,6 +44,7 @@ fun HomeScreen(
     competitions: HomeScreenListViewState,
     onCompetitionCardClick: (Int) -> Unit,
     onFollowButtonClick: (Int) -> Unit,
+    onSearchButtonClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -59,7 +62,7 @@ fun HomeScreen(
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold
         )
-        //MainSearchbar()
+        SearchBar(modifier = Modifier.height(65.dp), onSearchButtonClick = onSearchButtonClick)
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(competitions.competitionViewStates) { competition ->
                 CompetitionCard(

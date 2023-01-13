@@ -34,12 +34,11 @@ data class MemberCardViewState(
 fun MemberCard(
     member: MemberCardViewState,
     modifier: Modifier,
-    onImageClick: () -> Unit
 ) {
     Card(
         modifier = modifier,
         border = BorderStroke(
-            4.dp,
+            2.dp,
             brush = Brush.horizontalGradient(
                 colors = listOf(
                     colorResource(id = R.color.dark_blue),
@@ -59,7 +58,6 @@ fun MemberCard(
                 contentDescription = null,
                 modifier = Modifier
                     .padding(8.dp)
-                    .clickable { onImageClick() }
                     .clip(RoundedCornerShape(10.dp))
                     .fillMaxHeight()
                     .width(90.dp),
