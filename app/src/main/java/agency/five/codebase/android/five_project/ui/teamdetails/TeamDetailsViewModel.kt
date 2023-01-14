@@ -16,18 +16,17 @@ import kotlinx.coroutines.flow.stateIn
 class TeamDetailsViewModel(
     private val teamRepository: TeamRepository,
     private val mapper: TeamDetailsMapper,
-    team: Team
+    teamId: Int
 ) : ViewModel() {
+    private val initialViewState=TeamDetailsViewState.EMPTY
     val teamDetailsViewState: StateFlow<TeamDetailsViewState> =
-        teamRepository.getTeamDetails(team)
+        teamRepository.getTeamDetails(teamId)
             .map { team ->
                 mapper.toTeamDetailsViewState(team)
             }
             .stateIn(
                 viewModelScope,
                 SharingStarted.Eagerly,
-                mapper.toTeamDetailsViewState(
-                    Mock.getTeamDetails(team)
-                )
+                initialViewState
             )
 }

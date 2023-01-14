@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface CompetitionRepository {
     fun competitions(): Flow<List<Competition>>
-    fun competitionDetails(competition: Competition): Flow<CompetitionDetails>
+    fun competitionDetails(competitionId: Int): Flow<CompetitionDetails>
     fun followed(): Flow<List<Competition>>
     suspend fun addCompetitionToFollowed(competitionId: Int)
     suspend fun removeCompetitionFromFollowed(competitionId: Int)

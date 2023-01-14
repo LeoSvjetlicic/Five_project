@@ -23,22 +23,23 @@ class CompetitionRepositoryImpl(
 ) : CompetitionRepository {
     private val competitions: Flow<List<Competition>> = flow {
         val competitions = mutableListOf<Competition>()
-        val dbCompetitions = firestore.collection(FIRESTORE_COLLECTION_COMPETITIONS)
+        firestore.collection(FIRESTORE_COLLECTION_COMPETITIONS)
             .get()
-            .addOnSuccessListener{result->
-            for(competition in result){
-                val tempCompetition = Competition(
-                    id=competition.id.toInt(),
-                    name="competition.data",
-                    imageUrl = "",
-                    isFollowed=true
-                )
-                competitions.add(tempCompetition)
-            }}
+            .addOnSuccessListener { result ->
+                for (competition in result) {
+                    val tempCompetition = Competition(
+                        id = competition.id.toInt(),
+                        name = competition.get("name").toString(),
+                        imageUrl = competition.get("imageUrl").toString(),
+                        isFollowed = false
+                    )
+                    competitions.add(tempCompetition)
+                }
+            }
         emit(competitions)
     }.shareIn(
         scope = CoroutineScope(bgDispatcher),
-        started = SharingStarted.WhileSubscribed(1000L),
+        started = SharingStarted.Eagerly,
         replay = 1
     )
     private val followed = competitionDao.followed().map { competitions ->
@@ -46,7 +47,7 @@ class CompetitionRepositoryImpl(
             Competition(
                 id = it.id,
                 imageUrl = it.imageUrl,
-                name = "",
+                name = it.name,
                 isFollowed = true
             )
         }
@@ -58,7 +59,7 @@ class CompetitionRepositoryImpl(
 
     override fun competitions(): Flow<List<Competition>> = competitions
 
-    override fun competitionDetails(competition: Competition): Flow<CompetitionDetails> {
+    override fun competitionDetails(competitionId: Int): Flow<CompetitionDetails> {
         val teams = mutableListOf<Team>()
         val dbTeams = firestore.collection(FIRESTORE_COLLECTION_TEAMS)
             .get()
@@ -73,11 +74,11 @@ class CompetitionRepositoryImpl(
         }
         return flow<CompetitionDetails> {
             CompetitionDetails(
-                competition = competition,
-                teams = teams.filter { it.league == competition.name })
+                competition = findCompetition(competitionId),
+                teams = teams.filter { it.league == findCompetition(competitionId).name })
         }.shareIn(
             scope = CoroutineScope(bgDispatcher),
-            started = SharingStarted.WhileSubscribed(1000L),
+            started = SharingStarted.Eagerly,
             replay = 1
         )
     }
@@ -91,7 +92,8 @@ class CompetitionRepositoryImpl(
             competitionDao.insertCompetition(
                 DbFollowedCompetition(
                     tempCompetition.id,
-                    it
+                    tempCompetition.imageUrl,
+                    tempCompetition.name
                 )
             )
         }

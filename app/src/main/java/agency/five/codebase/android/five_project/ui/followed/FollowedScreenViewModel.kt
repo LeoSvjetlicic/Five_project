@@ -24,7 +24,7 @@ class FollowedScreenViewModel(
 
     fun toggleFollowed(competitionId: Int) {
         viewModelScope.launch {
-            competitionRepository.removeCompetitionFromFollowed(competitionId = competitionId)
+            competitionRepository.toggleFollowed(competitionId = competitionId)
         }
     }
 }

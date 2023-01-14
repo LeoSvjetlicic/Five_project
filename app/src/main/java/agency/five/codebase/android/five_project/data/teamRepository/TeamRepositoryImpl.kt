@@ -1,6 +1,5 @@
 package agency.five.codebase.android.five_project.data.teamRepository
 
-import agency.five.codebase.android.five_project.data.competitionRepository.FIRESTORE_COLLECTION_COMPETITIONS
 import agency.five.codebase.android.five_project.data.competitionRepository.FIRESTORE_COLLECTION_TEAMS
 import agency.five.codebase.android.five_project.model.*
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,7 +31,7 @@ class TeamRepositoryImpl(
 
     override fun getTeams(leagueId: String): Flow<List<Team>> = teams
 
-    override fun getTeamDetails(team: Team): Flow<TeamDetails> {
+    override fun getTeamDetails(teamId: Int): Flow<TeamDetails> {
         val players = mutableListOf<Member>()
         val dbMember = firestore.collection(FIRESTORE_COLLECTION_TEAMS)
             .get()
@@ -48,13 +47,20 @@ class TeamRepositoryImpl(
         }
         return flow<TeamDetails> {
             TeamDetails(
-                team = team,
-                members = players.filter { it.teamId == team.name })
-        }.shareIn(
-            scope = CoroutineScope(bgDispatcher),
-            started = SharingStarted.WhileSubscribed(1000L),
-            replay = 1
-        )
+                team = findTeam(teamId),
+                members = players.filter { it.teamId.toInt() == findTeam(teamId).id })
+        }.flowOn(bgDispatcher)
     }
 
+    override suspend fun findTeam(teamId: Int): Team {
+        lateinit var team: Team
+        val competitionList = teams.first()
+        competitionList.forEach {
+            if (it.id == teamId) {
+                team = it
+                return team
+            }
+        }
+        return team
+    }
 }

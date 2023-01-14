@@ -11,16 +11,17 @@ class HomeViewModel(
     private val competitionRepository: CompetitionRepository,
     private val homeScreenMapper: HomeScreenMapper
 ) : ViewModel() {
-        private val _homeScreenViewState = MutableStateFlow(HomeScreenListViewState())
-    val homeScreenViewState = _homeScreenViewState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            competitionRepository.competitions().collect{
-                _homeScreenViewState.value=homeScreenMapper.toHomeScreenViewState(it)
-            }
+    private val initialViewState = HomeScreenListViewState()
+    private val _homeScreenViewState = MutableStateFlow(HomeScreenListViewState())
+    val homeScreenViewState = _homeScreenViewState.flatMapLatest { list ->
+        competitionRepository.competitions().map {
+            homeScreenMapper.toHomeScreenViewState(it)
         }
-    }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = initialViewState
+    )
 
     fun toggleFollowed(competitionId: Int) {
         viewModelScope.launch {
