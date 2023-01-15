@@ -4,5 +4,5 @@ data class Competition(
     var id: Int,
     val name: String,
     val imageUrl: String,
-    val isFollowed: Boolean,
+    var isFollowed: Boolean,
 )

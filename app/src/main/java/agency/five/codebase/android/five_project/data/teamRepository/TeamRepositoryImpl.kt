@@ -1,11 +1,14 @@
 package agency.five.codebase.android.five_project.data.teamRepository
 
-import agency.five.codebase.android.five_project.data.competitionRepository.FIRESTORE_COLLECTION_TEAMS
 import agency.five.codebase.android.five_project.model.*
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.tasks.await
+
+const val FIRESTORE_COLLECTION_TEAMS = "teams"
 
 class TeamRepositoryImpl(
     private val firestore: FirebaseFirestore,
@@ -13,29 +16,37 @@ class TeamRepositoryImpl(
 ) : TeamRepository {
     private val teams: Flow<List<Team>> = flow {
         val tempTeams = mutableListOf<Team>()
-        val dbTeams = firestore.collection(FIRESTORE_COLLECTION_TEAMS)
+        firestore.collection(FIRESTORE_COLLECTION_TEAMS)
             .get()
-        for (t in dbTeams.result.documents) {
-            val tempCompetition = t.toObject(Team::class.java)
-            if (tempCompetition != null) {
-                tempCompetition.id = t.id.toInt()
-                tempTeams.add(tempCompetition)
+            .addOnSuccessListener { result ->
+                for (team in result) {
+                    val tempTeam = Team(
+                        id = team.id.toInt(),
+                        description = team.get("description").toString(),
+                        name = team.get("name").toString(),
+                        league = team.get("league").toString(),
+                        imageUrl = team.get("imageUrl").toString(),
+                        position = team.get("position").toString().toInt(),
+                        numberOfPoints = team.get("numberOfPoints").toString().toInt()
+                    )
+                    tempTeams.add(tempTeam)
+                }
             }
-        }
         emit(tempTeams)
     }.shareIn(
         scope = CoroutineScope(bgDispatcher),
-        started = SharingStarted.WhileSubscribed(1000L),
+        started = SharingStarted.Eagerly,
         replay = 1
     )
 
-    override fun getTeams(leagueId: String): Flow<List<Team>> = teams
+    override fun getTeams(): Flow<List<Team>> = teams
 
-    override fun getTeamDetails(teamId: Int): Flow<TeamDetails> {
+    override suspend fun getTeamDetails(teamId: Int): Flow<TeamDetails> {
         val players = mutableListOf<Member>()
         val dbMember = firestore.collection(FIRESTORE_COLLECTION_TEAMS)
             .get()
-        for (member in dbMember.result.documents) {
+            .await()
+        for (member in dbMember.documents) {
             val tempMember = member.toObject(Member::class.java)
             if (tempMember != null) {
                 tempMember.id = member.id.toInt()
@@ -48,7 +59,7 @@ class TeamRepositoryImpl(
         return flow<TeamDetails> {
             TeamDetails(
                 team = findTeam(teamId),
-                members = players.filter { it.teamId.toInt() == findTeam(teamId).id })
+                members = players.filter { it.teamId == findTeam(teamId).name })
         }.flowOn(bgDispatcher)
     }
 

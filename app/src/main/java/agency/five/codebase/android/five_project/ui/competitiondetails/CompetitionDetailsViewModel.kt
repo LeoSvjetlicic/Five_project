@@ -25,7 +25,7 @@ class CompetitionDetailsViewModel(
             competitionDetailsMapper.toCompetitionDetailsViewState(competitions)
         }.stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
+            started = SharingStarted.Eagerly,
             initialValue = initialValue
         )
 

@@ -10,8 +10,12 @@ data class CompetitionDetailsViewState(
 ) {
     companion object {
         val EMPTY: CompetitionDetailsViewState = CompetitionDetailsViewState(
-            id = 1,
-            competitionCardViewState = CompetitionCardViewState("", true, ""),
+            id = 4,
+            competitionCardViewState = CompetitionCardViewState(
+                "",
+                false,
+                ""
+            ),
         )
     }
 }

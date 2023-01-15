@@ -1,9 +1,6 @@
 package agency.five.codebase.android.five_project.ui.competitiondetails
 
 import agency.five.codebase.android.five_project.R
-import agency.five.codebase.android.five_project.mock.Mock
-import agency.five.codebase.android.five_project.ui.competitiondetails.mapper.CompetitionDetailsMapper
-import agency.five.codebase.android.five_project.ui.competitiondetails.mapper.CompetitionDetailsMapperImpl
 import agency.five.codebase.android.five_project.ui.components.FollowButton
 import agency.five.codebase.android.five_project.ui.components.TeamCard
 import androidx.compose.foundation.background
@@ -35,7 +32,8 @@ fun CompetitionDetailsRoute(
     CompetitionDetailsScreen(
         competitionDetailsViewState = competitionDetailsViewState,
         onTeamCardClick = onTeamCardClick,
-        onFollowButtonCLick = viewModel::toggleFollowed
+        onFollowButtonCLick = viewModel::toggleFollowed,
+        modifier = modifier
     )
 }
 

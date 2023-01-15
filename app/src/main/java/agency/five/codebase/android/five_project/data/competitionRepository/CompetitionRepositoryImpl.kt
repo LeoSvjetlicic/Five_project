@@ -2,24 +2,24 @@ package agency.five.codebase.android.five_project.data.competitionRepository
 
 import agency.five.codebase.android.five_project.data.database.DbFollowedCompetition
 import agency.five.codebase.android.five_project.data.database.FollowedCompetitionDao
+import agency.five.codebase.android.five_project.data.teamRepository.TeamRepository
 import agency.five.codebase.android.five_project.model.Competition
 import agency.five.codebase.android.five_project.model.CompetitionDetails
-import agency.five.codebase.android.five_project.model.Team
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.tasks.await
 
 const val FIRESTORE_COLLECTION_COMPETITIONS = "competitions"
-const val FIRESTORE_COLLECTION_TEAMS = "teams"
 
 @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class CompetitionRepositoryImpl(
     private val firestore: FirebaseFirestore,
     private val bgDispatcher: CoroutineDispatcher,
-    private val competitionDao: FollowedCompetitionDao
+    private val competitionDao: FollowedCompetitionDao,
+    private val teamRepository: TeamRepository
 ) : CompetitionRepository {
     private val competitions: Flow<List<Competition>> = flow {
         val competitions = mutableListOf<Competition>()
@@ -36,10 +36,18 @@ class CompetitionRepositoryImpl(
                     competitions.add(tempCompetition)
                 }
             }
+        Log. d("CompetitionDatabase", "succesfull ?")
         emit(competitions)
+    }.flatMapLatest { competitions ->
+        competitionDao.followed().map { followed ->
+            competitions.forEach { competition ->
+                competition.isFollowed = followed.any { it.id == competition.id }
+            }
+            competitions
+        }
     }.shareIn(
         scope = CoroutineScope(bgDispatcher),
-        started = SharingStarted.Eagerly,
+        started = SharingStarted.WhileSubscribed(1000L),
         replay = 1
     )
     private val followed = competitionDao.followed().map { competitions ->
@@ -60,31 +68,20 @@ class CompetitionRepositoryImpl(
     override fun competitions(): Flow<List<Competition>> = competitions
 
     override fun competitionDetails(competitionId: Int): Flow<CompetitionDetails> {
-        val teams = mutableListOf<Team>()
-        val dbTeams = firestore.collection(FIRESTORE_COLLECTION_TEAMS)
-            .get()
-        for (team in dbTeams.result.documents) {
-            val tempTeam = team.toObject(Team::class.java)
-            if (tempTeam != null) {
-                tempTeam.id = team.id.toInt()
-            }
-            if (tempTeam != null) {
-                teams.add(tempTeam)
-            }
-        }
+        val teams = teamRepository.getTeams()
         return flow<CompetitionDetails> {
             CompetitionDetails(
                 competition = findCompetition(competitionId),
-                teams = teams.filter { it.league == findCompetition(competitionId).name })
+                teams = teams.first().filter { it.league == findCompetition(competitionId).name }
+            )
         }.shareIn(
             scope = CoroutineScope(bgDispatcher),
-            started = SharingStarted.Eagerly,
+            started = SharingStarted.WhileSubscribed(1000L),
             replay = 1
         )
     }
 
     override fun followed(): Flow<List<Competition>> = followed
-
 
     override suspend fun addCompetitionToFollowed(competitionId: Int) {
         val tempCompetition = findCompetition(competitionId)

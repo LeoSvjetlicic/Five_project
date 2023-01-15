@@ -25,7 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun HomeScreenRoute(
-    homeViewModel: HomeViewModel ,
+    homeViewModel: HomeViewModel =viewModel(),
     onCompetitionCardClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -62,7 +62,7 @@ fun HomeScreen(
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold
         )
-        SearchBar(modifier = Modifier.height(65.dp), onSearchButtonClick = onSearchButtonClick)
+        //SearchBar(modifier = Modifier.height(65.dp), onSearchButtonClick = onSearchButtonClick)
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(competitions.competitionViewStates) { competition ->
                 CompetitionCard(
