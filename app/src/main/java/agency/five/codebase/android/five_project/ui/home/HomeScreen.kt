@@ -25,11 +25,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun HomeScreenRoute(
-    homeViewModel: HomeViewModel =viewModel(),
+    homeViewModel: HomeViewModel = viewModel(),
     onCompetitionCardClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val competitionsViewState by homeViewModel.homeScreenViewState.collectAsState()
+    val competitionsViewState: HomeScreenListViewState by homeViewModel.homeScreenViewState.collectAsState()
     HomeScreen(
         modifier = modifier,
         competitions = competitionsViewState,

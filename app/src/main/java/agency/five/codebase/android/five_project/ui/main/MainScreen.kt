@@ -1,6 +1,7 @@
 package agency.five.codebase.android.five_project.ui.main
 
 import agency.five.codebase.android.five_project.R
+import agency.five.codebase.android.five_project.data.teamRepository.di.teamModule
 import agency.five.codebase.android.five_project.navigation.*
 import agency.five.codebase.android.five_project.ui.competitiondetails.CompetitionDetailsRoute
 import agency.five.codebase.android.five_project.ui.competitiondetails.CompetitionDetailsViewModel
@@ -113,6 +114,17 @@ fun MainScreen() {
                     )
                 }
                 composable(
+                    route = TeamDetailsDestination.route,
+                    arguments = listOf(navArgument(TEAM_ID) { type = NavType.IntType })
+                ) {
+                    val teamId = it.arguments?.getInt(TEAM_ID)
+                    val viewModel =
+                        getViewModel<TeamDetailsViewModel>(parameters = {
+                            parametersOf(teamId)
+                        })
+                    TeamDetailsRoute(viewModel)
+                }
+                composable(
                     route = CompetitionDetailsDestination.route,
                     arguments = listOf(navArgument(COMPETITION_ID) { type = NavType.IntType })
                 ) {
@@ -124,22 +136,11 @@ fun MainScreen() {
                     CompetitionDetailsRoute(
                         onTeamCardClick = {
                             navController.navigate(
-                                TeamDetailsDestination.createNavigationRoute(it.id.toInt())
+                                TeamDetailsDestination.createNavigationRoute(4)
                             )
                         },
                         viewModel = viewModel
                     )
-                }
-                composable(
-                    route = TeamDetailsDestination.route,
-                    arguments = listOf(navArgument(TEAM_ID) { type = NavType.IntType })
-                ) {
-                    val teamId = it.arguments?.getInt(TEAM_ID)
-                    val viewModel =
-                        getViewModel<TeamDetailsViewModel>(parameters = {
-                            parametersOf(teamId)
-                        })
-                    TeamDetailsRoute(viewModel)
                 }
             }
         }

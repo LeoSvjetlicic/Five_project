@@ -17,6 +17,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -60,8 +61,8 @@ fun MemberCard(
                     .padding(8.dp)
                     .clip(RoundedCornerShape(10.dp))
                     .fillMaxHeight()
-                    .width(90.dp),
-                contentScale = ContentScale.Crop
+                    .width(80.dp),
+                contentScale = ContentScale.Fit
             )
             Column(
                 verticalArrangement = Arrangement.SpaceEvenly,
@@ -73,12 +74,14 @@ fun MemberCard(
                 Text(
                     text = member.name,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Center
+                    fontSize = 13.sp,
+                    textAlign = TextAlign.Center,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
                 )
                 NumberedKit(
                     number = member.number,
-                    modifier = Modifier.size(45.dp)
+                    modifier = Modifier.size(40.dp)
                 )
                 Image(
                     painter = painterResource(
@@ -87,7 +90,6 @@ fun MemberCard(
                         } else R.drawable.left_footed
                     ),
                     contentDescription = null,
-                    modifier = Modifier.size(40.dp)
                 )
             }
         }

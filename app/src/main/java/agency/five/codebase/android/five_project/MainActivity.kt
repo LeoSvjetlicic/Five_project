@@ -3,6 +3,7 @@ package agency.five.codebase.android.five_project
 import agency.five.codebase.android.five_project.data.competitionRepository.di.competitionModule
 import agency.five.codebase.android.five_project.data.di.dataModule
 import agency.five.codebase.android.five_project.data.di.databaseModule
+import agency.five.codebase.android.five_project.data.di.firebaseModule
 import agency.five.codebase.android.five_project.data.teamRepository.di.teamModule
 import agency.five.codebase.android.five_project.ui.competitiondetails.di.competitionDetailsModule
 import agency.five.codebase.android.five_project.ui.followed.di.followedModule
@@ -30,6 +31,7 @@ class MainActivity : Application() {
                 teamModule,
                 competitionModule,
                 databaseModule,
+                firebaseModule
             )
             Log.d("CompetitionApp", "App started")
         }

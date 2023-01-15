@@ -16,7 +16,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun NumberedKit(number: Int, modifier: Modifier) {
+fun NumberedKit(
+    number: Int,
+    modifier: Modifier = Modifier
+) {
     Box(modifier = modifier) {
         Image(
             painter = painterResource(R.drawable.kit),
@@ -34,6 +37,6 @@ fun NumberedKit(number: Int, modifier: Modifier) {
 
 @Preview
 @Composable
-fun NumberedKitPreview(){
+fun NumberedKitPreview() {
     NumberedKit(number = 77, modifier = Modifier.size(50.dp))
 }
