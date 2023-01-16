@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -54,7 +55,8 @@ fun FollowedScreen(
                 .padding(start = 10.dp, end = 10.dp),
             textAlign = TextAlign.Center,
             fontSize = 30.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = Color.White
         )
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(followedViewState.competitionCardViewStates) {

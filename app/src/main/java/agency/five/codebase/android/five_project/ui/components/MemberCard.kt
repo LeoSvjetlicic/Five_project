@@ -28,7 +28,7 @@ data class MemberCardViewState(
     val name: String,
     val number: Int,
     val imageUrl: String?,
-    val isRightFooted: Boolean
+    val rightFooted: Boolean
 )
 
 @Composable
@@ -85,7 +85,7 @@ fun MemberCard(
                 )
                 Image(
                     painter = painterResource(
-                        id = if (member.isRightFooted) {
+                        id = if (member.rightFooted) {
                             R.drawable.right_footed
                         } else R.drawable.left_footed
                     ),

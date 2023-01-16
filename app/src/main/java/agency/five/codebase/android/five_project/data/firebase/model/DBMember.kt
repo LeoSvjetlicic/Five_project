@@ -12,8 +12,8 @@ data class DBMember(
     val name: String,
     @SerialName("imageUrl")
     val imageUrl: String,
-    @SerialName("isRightFooted")
-    val isRightFooted: Boolean,
+    @SerialName("rightFooted")
+    val rightFooted: Boolean,
     @SerialName("number")
     val number: Int,
     @SerialName("teamId")
@@ -24,7 +24,7 @@ data class DBMember(
             id = id,
             name = name,
             imageUrl = imageUrl,
-            isRightFooted = isRightFooted,
+            rightFooted = rightFooted,
             number = number,
             teamId = teamId
         )

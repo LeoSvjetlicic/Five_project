@@ -21,7 +21,7 @@ class TeamDetailsMapperImpl : TeamDetailsMapper {
                     name = member.name,
                     number = member.number,
                     imageUrl = member.imageUrl,
-                    isRightFooted = member.isRightFooted
+                    rightFooted = member.rightFooted
                 )
             }
         )

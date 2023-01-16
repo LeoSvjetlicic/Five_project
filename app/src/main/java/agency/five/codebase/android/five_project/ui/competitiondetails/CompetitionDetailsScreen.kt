@@ -52,9 +52,10 @@ fun CompetitionDetailsScreen(
             AsyncImage(
                 model = competitionDetailsViewState.competitionCardViewState.imageUrl,
                 contentDescription = null,
-                contentScale = ContentScale.FillWidth,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxSize()
+                    .height(250.dp)
                     .background(
                         brush = Brush.horizontalGradient(
                             colors = listOf(

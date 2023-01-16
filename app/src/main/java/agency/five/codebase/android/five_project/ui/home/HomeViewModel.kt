@@ -12,9 +12,8 @@ class HomeViewModel(
     private val competitionRepository: CompetitionRepository,
     private val homeScreenMapper: HomeScreenMapper
 ) : ViewModel() {
-//    private val initialViewState = HomeScreenListViewState()
-//    private val _homeScreenViewState = MutableStateFlow(HomeScreenListViewState())
-    val homeScreenViewState:StateFlow<HomeScreenListViewState> = competitionRepository.competitions().map { list ->
+    val homeScreenViewState:StateFlow<HomeScreenListViewState> =
+        competitionRepository.competitions().map { list ->
             homeScreenMapper.toHomeScreenViewState(list)
     }.stateIn(
         scope = viewModelScope,

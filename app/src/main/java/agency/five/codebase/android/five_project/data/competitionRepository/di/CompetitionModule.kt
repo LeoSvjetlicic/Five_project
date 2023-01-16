@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 
 val competitionModule = module {
-    single<CompetitionRepository> { CompetitionRepositoryImpl(get(), Dispatchers.IO, get(), get()) }
+    single<CompetitionRepository> { CompetitionRepositoryImpl(get(), Dispatchers.IO, get()) }
     fun provideFollowedMovieDao(db: CompetitionAppDatabase): FollowedCompetitionDao =
         db.getCompetitionDao()
     single {

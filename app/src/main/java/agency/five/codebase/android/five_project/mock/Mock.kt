@@ -10,7 +10,7 @@ object Mock {
             id = it,
             name = "Luka Modrić",
             imageUrl = "https://pbs.twimg.com/profile_images/1501988258078674950/_5xMT_RA_400x400.jpg",
-            isRightFooted = true,
+            rightFooted = true,
             number = 10,
             teamId = "34"
         )

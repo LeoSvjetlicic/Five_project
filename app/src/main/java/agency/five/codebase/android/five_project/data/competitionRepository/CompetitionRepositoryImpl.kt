@@ -3,6 +3,7 @@ package agency.five.codebase.android.five_project.data.competitionRepository
 import agency.five.codebase.android.five_project.data.database.DbFollowedCompetition
 import agency.five.codebase.android.five_project.data.database.FollowedCompetitionDao
 import agency.five.codebase.android.five_project.data.firebase.CompetitionService
+import agency.five.codebase.android.five_project.data.firebase.model.DBCompetition
 import agency.five.codebase.android.five_project.data.teamRepository.TeamRepository
 import agency.five.codebase.android.five_project.model.Competition
 import agency.five.codebase.android.five_project.model.CompetitionDetails
@@ -18,7 +19,6 @@ class CompetitionRepositoryImpl(
     private val competitionService: CompetitionService,
     private val bgDispatcher: CoroutineDispatcher,
     private val competitionDao: FollowedCompetitionDao,
-    private val teamRepository: TeamRepository
 ) : CompetitionRepository {
     private val competitions: Flow<List<Competition>> = flow {
         emit(competitionService.fetchCompetitions())
@@ -33,6 +33,7 @@ class CompetitionRepositoryImpl(
         started = SharingStarted.WhileSubscribed(1000L),
         replay = 1
     )
+
     private val followed = competitionDao.followed().map { competitions ->
         competitions.map {
             Competition(
@@ -53,13 +54,24 @@ class CompetitionRepositoryImpl(
     }
 
     override fun competitionDetails(competitionId: Int): Flow<CompetitionDetails> = flow {
-        val teams = teamRepository.getTeams()
-        val details = CompetitionDetails(
-            competition = findCompetition(competitionId),
-            teams = teams.first().filter { it.league == findCompetition(competitionId).name }
-                .sortedBy { it.position }
+        val competition = findCompetition(competitionId)
+        val details = DBCompetition(
+            id = competition.id,
+            name = competition.name,
+            imageUrl = competition.imageUrl
         )
         emit(details)
+    }.flatMapLatest {
+        val teams = competitionService.fetchTeams()
+            .filter { it.league == findCompetition(competitionId).name }
+            .sortedBy { it.position }
+        competitionDao.followed().map { follow ->
+            it.toCompetitionDetails(
+                isFollowed = follow.any { it.id == competitionId },
+                teams = teams
+            )
+        }
+
     }.shareIn(
         scope = CoroutineScope(bgDispatcher),
         started = SharingStarted.WhileSubscribed(1000L),

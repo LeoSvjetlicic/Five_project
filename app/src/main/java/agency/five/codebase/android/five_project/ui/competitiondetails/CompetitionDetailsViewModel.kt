@@ -18,15 +18,13 @@ class CompetitionDetailsViewModel(
     private val competitionDetailsMapper: CompetitionDetailsMapper,
     private val competitionId: Int
 ) : ViewModel() {
-    private val initialValue = CompetitionDetailsViewState.EMPTY
-
     val competitionDetailsViewState: StateFlow<CompetitionDetailsViewState> =
-        competitionRepository.competitionDetails(competitionId).map { competitions ->
-            competitionDetailsMapper.toCompetitionDetailsViewState(competitions)
+        competitionRepository.competitionDetails(competitionId).map { details ->
+            competitionDetailsMapper.toCompetitionDetailsViewState(details)
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(1000L),
-            initialValue = initialValue
+            initialValue = CompetitionDetailsViewState.EMPTY
         )
 
     fun toggleFollowed(competitionId: Int) {

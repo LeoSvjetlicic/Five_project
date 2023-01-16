@@ -35,7 +35,6 @@ class CompetitionServiceImpl(private val firestore: FirebaseFirestore) : Competi
             .get()
             .await()
         for (team in result) {
-            Log.d("osidjgisufnvsdklfbeiurvdnylkmnjfsvo","${team.get("description")}")
             val tempTeam = DBTeam(
                 id = team.id.toInt(),
                 description = team.get("description").toString(),
@@ -60,7 +59,7 @@ class CompetitionServiceImpl(private val firestore: FirebaseFirestore) : Competi
                 id = team.id.toInt(),
                 name = team.get("name").toString(),
                 imageUrl = team.get("imageUrl").toString(),
-                isRightFooted = true,
+                rightFooted = true,
                 number = team.get("number").toString().toInt(),
                 teamId = team.get("teamId").toString(),
             )

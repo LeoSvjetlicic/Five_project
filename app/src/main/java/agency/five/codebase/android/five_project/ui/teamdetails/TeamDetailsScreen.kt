@@ -129,7 +129,7 @@ fun TeamDetailScreen(
                             name = member.name,
                             imageUrl = member.imageUrl,
                             number = member.number,
-                            isRightFooted = member.isRightFooted
+                            rightFooted = member.rightFooted
                         ),
                         modifier = Modifier
                             .padding(5.dp)

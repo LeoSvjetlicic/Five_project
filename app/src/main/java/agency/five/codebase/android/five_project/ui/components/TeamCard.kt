@@ -76,8 +76,9 @@ fun TeamCard(
                 modifier = Modifier
                     .padding(10.dp)
                     .size(50.dp)
-                    .clip(RoundedCornerShape(10.dp)),
-                contentScale = ContentScale.Crop,
+                    .fillMaxHeight()
+                    .clip(RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.FillHeight,
             )
             Text(
                 modifier = Modifier.width(200.dp),

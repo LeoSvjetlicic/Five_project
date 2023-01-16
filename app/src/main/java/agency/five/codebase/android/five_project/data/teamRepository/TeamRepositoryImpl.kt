@@ -24,7 +24,6 @@ class TeamRepositoryImpl(
     override suspend fun getTeamDetails(teamId: Int): Flow<TeamDetails> = flow {
         val members = competitionService.fetchMembers()
         val team = findTeam(teamId)
-        Log.d("timovi","${team.id}")
         val teamDetails = TeamDetails(
             team = team,
             members = members.map { it.toMember() }.filter { it.teamId == team.name })
@@ -38,7 +37,6 @@ class TeamRepositoryImpl(
     override suspend fun findTeam(teamId: Int): Team {
         lateinit var team: Team
         val teamList = teams.first()
-        Log.d("111111112233","$teamList")
         teamList.forEach {
             if (it.id == teamId) {
                 team = it

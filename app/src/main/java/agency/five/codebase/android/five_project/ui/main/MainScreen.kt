@@ -136,7 +136,7 @@ fun MainScreen() {
                     CompetitionDetailsRoute(
                         onTeamCardClick = {
                             navController.navigate(
-                                TeamDetailsDestination.createNavigationRoute(4)
+                                TeamDetailsDestination.createNavigationRoute(2)
                             )
                         },
                         viewModel = viewModel

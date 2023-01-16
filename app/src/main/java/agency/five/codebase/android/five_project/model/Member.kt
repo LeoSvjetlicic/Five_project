@@ -5,6 +5,6 @@ data class Member(
     val name: String = "",
     val teamId: String = "",
     val number: Int = 10,
-    val isRightFooted: Boolean = true,
+    val rightFooted: Boolean = true,
     val imageUrl: String? = "",
 )
