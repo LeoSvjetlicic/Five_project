@@ -3,6 +3,7 @@ package agency.five.codebase.android.five_project.ui.home
 import agency.five.codebase.android.five_project.R
 import agency.five.codebase.android.five_project.mock.Mock
 import agency.five.codebase.android.five_project.ui.components.CompetitionCard
+import agency.five.codebase.android.five_project.ui.components.SearchBar
 import agency.five.codebase.android.five_project.ui.home.mapper.HomeScreenMapper
 import agency.five.codebase.android.five_project.ui.home.mapper.HomeScreenMapperImpl
 import androidx.compose.foundation.background
@@ -14,6 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,12 +30,13 @@ fun HomeScreenRoute(
     onCompetitionCardClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val competitionsViewState by homeViewModel.homeScreenViewState.collectAsState()
+    val competitionsViewState: HomeScreenListViewState by homeViewModel.homeScreenViewState.collectAsState()
     HomeScreen(
         modifier = modifier,
         competitions = competitionsViewState,
         onCompetitionCardClick = onCompetitionCardClick,
-        onFollowButtonClick = homeViewModel::toggleFollowed
+        onFollowButtonClick = homeViewModel::toggleFollowed,
+        onSearchButtonClick = {}
     )
 }
 
@@ -42,6 +45,7 @@ fun HomeScreen(
     competitions: HomeScreenListViewState,
     onCompetitionCardClick: (Int) -> Unit,
     onFollowButtonClick: (Int) -> Unit,
+    onSearchButtonClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -51,15 +55,12 @@ fun HomeScreen(
             text = stringResource(id = R.string.competitions),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(5.dp)
-                .clip(RoundedCornerShape(60.dp))
-                .background(colorResource(id = R.color.light_blue))
-                .padding(start = 10.dp, end = 10.dp),
-            textAlign = TextAlign.Center,
+                .padding(top = 5.dp, bottom = 5.dp),
+            textAlign = TextAlign.Start,
             fontSize = 30.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
-        //MainSearchbar()
+        //SearchBar(modifier = Modifier.height(65.dp), onSearchButtonClick = onSearchButtonClick)
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(competitions.competitionViewStates) { competition ->
                 CompetitionCard(
@@ -68,6 +69,7 @@ fun HomeScreen(
                     onFollowButtonClick = { onFollowButtonClick(competition.id) },
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(top = 10.dp)
                         .height(70.dp)
                 )
             }

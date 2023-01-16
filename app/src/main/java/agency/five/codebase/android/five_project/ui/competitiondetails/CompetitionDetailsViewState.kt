@@ -9,10 +9,13 @@ data class CompetitionDetailsViewState(
     val teamViewStates: List<TeamCardViewState> = emptyList(),
 ) {
     companion object {
-        val EMPTY: CompetitionCardViewState = CompetitionCardViewState(
-            imageUrl = "https://upload.wikimedia.org/wikipedia/commons/6/6c/Luka_Doncic_2021_%28cropped%29.jpg",
-            isFollowed = false,
-            name = "Champions League"
+        val EMPTY: CompetitionDetailsViewState = CompetitionDetailsViewState(
+            id = 4,
+            competitionCardViewState = CompetitionCardViewState(
+                "",
+                false,
+                ""
+            ),
         )
     }
 }

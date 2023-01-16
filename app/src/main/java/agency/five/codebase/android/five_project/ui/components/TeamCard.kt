@@ -43,12 +43,11 @@ fun TeamCard(
     Card(
         shape = RoundedCornerShape(10.dp),
         modifier = modifier
-            .padding(4.dp)
             .clickable { onTeamCardClick() }
             .height(70.dp)
             .shadow(elevation = 5.dp, shape = RoundedCornerShape(10.dp)),
         border = BorderStroke(
-            4.dp,
+            2.dp,
             brush = Brush.horizontalGradient(
                 colors = listOf(
                     colorResource(id = R.color.dark_blue),
@@ -76,8 +75,9 @@ fun TeamCard(
                 modifier = Modifier
                     .padding(10.dp)
                     .size(50.dp)
-                    .clip(RoundedCornerShape(10.dp)),
-                contentScale = ContentScale.Crop,
+                    .fillMaxHeight()
+                    .clip(RoundedCornerShape(5.dp)),
+                contentScale = ContentScale.FillHeight,
             )
             Text(
                 modifier = Modifier.width(200.dp),

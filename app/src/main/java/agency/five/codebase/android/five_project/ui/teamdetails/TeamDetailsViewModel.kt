@@ -1,30 +1,27 @@
 package agency.five.codebase.android.five_project.ui.teamdetails
 
-import agency.five.codebase.android.five_project.data.repository.CompetitionRepository
-import agency.five.codebase.android.five_project.mock.Mock
+import agency.five.codebase.android.five_project.data.teamRepository.TeamRepository
 import agency.five.codebase.android.five_project.ui.teamdetails.mapper.TeamDetailsMapper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 
 class TeamDetailsViewModel(
-    private val competitionRepository: CompetitionRepository,
+    private val teamRepository: TeamRepository,
     private val mapper: TeamDetailsMapper,
-    teamId: Int
+    private val teamId: Int
 ) : ViewModel() {
+    private val initialViewState = TeamDetailsViewState.EMPTY
+    private val data=flow{
+        emit(teamRepository.getTeamDetails(teamId))
+    }
     val teamDetailsViewState: StateFlow<TeamDetailsViewState> =
-        competitionRepository.teamDetails(teamId)
-            .map { team ->
-                mapper.toTeamDetailsViewState(team)
+        data.map { team ->
+                mapper.toTeamDetailsViewState(team.first())
             }
-            .stateIn(
-                viewModelScope,
-                SharingStarted.Eagerly,
-                mapper.toTeamDetailsViewState(
-                    Mock.getTeamDetails(teamId)
-                )
-            )
+    .stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            initialViewState
+        )
 }

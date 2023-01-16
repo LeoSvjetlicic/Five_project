@@ -1,6 +1,7 @@
 package agency.five.codebase.android.five_project.ui.main
 
 import agency.five.codebase.android.five_project.R
+import agency.five.codebase.android.five_project.data.teamRepository.di.teamModule
 import agency.five.codebase.android.five_project.navigation.*
 import agency.five.codebase.android.five_project.ui.competitiondetails.CompetitionDetailsRoute
 import agency.five.codebase.android.five_project.ui.competitiondetails.CompetitionDetailsViewModel
@@ -10,6 +11,7 @@ import agency.five.codebase.android.five_project.ui.home.HomeScreenRoute
 import agency.five.codebase.android.five_project.ui.home.HomeViewModel
 import agency.five.codebase.android.five_project.ui.teamdetails.TeamDetailsRoute
 import agency.five.codebase.android.five_project.ui.teamdetails.TeamDetailsViewModel
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,6 +39,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.firebase.FirebaseApp
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -53,9 +56,6 @@ fun MainScreen() {
             }
         }
     }
-    val homeViewModel = getViewModel<HomeViewModel>()
-    val followedViewModel = getViewModel<FollowedScreenViewModel>()
-
     Scaffold(
         topBar = {
             TopBar(onImageClick = {
@@ -97,20 +97,22 @@ fun MainScreen() {
                     HomeScreenRoute(
                         onCompetitionCardClick = {
                             navController.navigate(
-                                CompetitionDetailsDestination.createNavigationRoute(1)
+                                CompetitionDetailsDestination.createNavigationRoute(it)
                             )
                         },
-                        homeViewModel = homeViewModel
+                        homeViewModel = getViewModel(),
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
                     )
                 }
                 composable(NavigationItem.FollowedDestination.route) {
                     FollowedScreenRoute(
                         onCompetitionCardClick = {
                             navController.navigate(
-                                CompetitionDetailsDestination.createNavigationRoute(1)
+                                CompetitionDetailsDestination.createNavigationRoute(it)
                             )
                         },
-                        followedScreenViewModel = followedViewModel
+                        followedScreenViewModel = getViewModel(),
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
                     )
                 }
                 composable(
@@ -123,12 +125,12 @@ fun MainScreen() {
                             parametersOf(competitionId)
                         })
                     CompetitionDetailsRoute(
-                        onTeamCardClick = {
+                        viewModel = viewModel,
+                        onTeamCardClick = { index ->
                             navController.navigate(
-                                TeamDetailsDestination.createNavigationRoute(1)
+                                TeamDetailsDestination.createNavigationRoute(index)
                             )
                         },
-                        viewModel = viewModel
                     )
                 }
                 composable(
@@ -140,7 +142,7 @@ fun MainScreen() {
                         getViewModel<TeamDetailsViewModel>(parameters = {
                             parametersOf(teamId)
                         })
-                    TeamDetailsRoute()
+                    TeamDetailsRoute(viewModel)
                 }
             }
         }
@@ -216,10 +218,4 @@ fun RowScope.AddItem(
         selected = currentDestination?.route == destination.route,
         onClick = { onNavigateToDestination(destination) }
     )
-}
-
-@Preview
-@Composable
-fun prew(){
-    MainScreen()
 }

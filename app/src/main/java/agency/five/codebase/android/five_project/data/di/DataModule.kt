@@ -1,12 +1,10 @@
 package agency.five.codebase.android.five_project.data.di
 
-import agency.five.codebase.android.five_project.data.repository.CompetitionRepository
-import agency.five.codebase.android.five_project.data.repository.FakeCompetitionRepository
-import kotlinx.coroutines.Dispatchers
+import agency.five.codebase.android.five_project.data.competitionRepository.CompetitionRepository
+import agency.five.codebase.android.five_project.data.competitionRepository.CompetitionRepositoryImpl
+import com.google.firebase.firestore.FirebaseFirestore
 import org.koin.dsl.module
 
 val dataModule = module {
-    single<CompetitionRepository> {
-        FakeCompetitionRepository(ioDispatcher = Dispatchers.IO)
-    }
+    single<FirebaseFirestore> { FirebaseFirestore.getInstance() }
 }

@@ -1,14 +1,12 @@
 package agency.five.codebase.android.five_project.ui.competitiondetails
 
 import agency.five.codebase.android.five_project.R
-import agency.five.codebase.android.five_project.mock.Mock
-import agency.five.codebase.android.five_project.ui.competitiondetails.mapper.CompetitionDetailsMapper
-import agency.five.codebase.android.five_project.ui.competitiondetails.mapper.CompetitionDetailsMapperImpl
 import agency.five.codebase.android.five_project.ui.components.FollowButton
 import agency.five.codebase.android.five_project.ui.components.TeamCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -28,21 +26,22 @@ import coil.compose.AsyncImage
 @Composable
 fun CompetitionDetailsRoute(
     viewModel: CompetitionDetailsViewModel,
-    onTeamCardClick: () -> Unit,
+    onTeamCardClick: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val competitionDetailsViewState: CompetitionDetailsViewState by viewModel.competitionDetailsViewState.collectAsState()
     CompetitionDetailsScreen(
         competitionDetailsViewState = competitionDetailsViewState,
         onTeamCardClick = onTeamCardClick,
-        onFollowButtonCLick = viewModel::toggleFollowed
+        onFollowButtonCLick = viewModel::toggleFollowed,
+        modifier = modifier
     )
 }
 
 @Composable
 fun CompetitionDetailsScreen(
     competitionDetailsViewState: CompetitionDetailsViewState,
-    onTeamCardClick: () -> Unit = {},
+    onTeamCardClick: (Int) -> Unit = {},
     onFollowButtonCLick: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -54,9 +53,10 @@ fun CompetitionDetailsScreen(
             AsyncImage(
                 model = competitionDetailsViewState.competitionCardViewState.imageUrl,
                 contentDescription = null,
-                contentScale = ContentScale.FillWidth,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxSize()
+                    .height(250.dp)
                     .background(
                         brush = Brush.horizontalGradient(
                             colors = listOf(
@@ -78,6 +78,7 @@ fun CompetitionDetailsScreen(
                             )
                         )
                     )
+                    .padding(start = 16.dp, end = 16.dp)
                     .clip(RoundedCornerShape(0.dp, 0.dp, 20.dp, 20.dp)),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -86,15 +87,13 @@ fun CompetitionDetailsScreen(
                     fontSize = 25.sp,
                     color = Color.White,
                     modifier = Modifier
-                        .padding(start = 10.dp)
                         .align(Alignment.CenterVertically),
                 )
                 FollowButton(
                     isFollowed = competitionDetailsViewState.competitionCardViewState.isFollowed,
                     modifier = Modifier
                         .size(50.dp)
-                        .align(Alignment.CenterVertically)
-                        .padding(end = 5.dp),
+                        .align(Alignment.CenterVertically),
                     onFollowButtonClick = { onFollowButtonCLick(competitionDetailsViewState.id) }
                 )
             }
@@ -103,10 +102,7 @@ fun CompetitionDetailsScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp)
-                    .clip(RoundedCornerShape(60.dp))
-                    .background(color = colorResource(id = R.color.light_blue))
-                    .padding(start = 10.dp, end = 10.dp),
+                    .padding(top = 10.dp, start = 20.dp, end = 20.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
@@ -126,12 +122,13 @@ fun CompetitionDetailsScreen(
                 )
             }
         }
-        items(competitionDetailsViewState.teamViewStates.size) { index ->
+        items(competitionDetailsViewState.teamViewStates) {
             TeamCard(
-                team = competitionDetailsViewState.teamViewStates[index],
-                onTeamCardClick = { onTeamCardClick() },
+                team = it,
+                onTeamCardClick = { onTeamCardClick(it.id) },
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(top = 10.dp, start = 16.dp, end = 16.dp)
                     .height(70.dp)
             )
         }

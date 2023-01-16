@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -17,6 +18,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,19 +29,18 @@ data class MemberCardViewState(
     val name: String,
     val number: Int,
     val imageUrl: String?,
-    val isRightFooted: Boolean
+    val rightFooted: Boolean
 )
 
 @Composable
 fun MemberCard(
     member: MemberCardViewState,
     modifier: Modifier,
-    onImageClick: () -> Unit
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier.shadow(elevation = 5.dp, shape = RoundedCornerShape(10.dp)),
         border = BorderStroke(
-            4.dp,
+            2.dp,
             brush = Brush.horizontalGradient(
                 colors = listOf(
                     colorResource(id = R.color.dark_blue),
@@ -59,11 +60,10 @@ fun MemberCard(
                 contentDescription = null,
                 modifier = Modifier
                     .padding(8.dp)
-                    .clickable { onImageClick() }
                     .clip(RoundedCornerShape(10.dp))
-                    .fillMaxHeight()
-                    .width(90.dp),
-                contentScale = ContentScale.Crop
+                    .width(80.dp)
+                    .fillMaxSize(),
+                contentScale = ContentScale.Fit
             )
             Column(
                 verticalArrangement = Arrangement.SpaceEvenly,
@@ -75,21 +75,22 @@ fun MemberCard(
                 Text(
                     text = member.name,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Center
+                    fontSize = 13.sp,
+                    textAlign = TextAlign.Center,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
                 )
                 NumberedKit(
                     number = member.number,
-                    modifier = Modifier.size(45.dp)
+                    modifier = Modifier.size(40.dp)
                 )
                 Image(
                     painter = painterResource(
-                        id = if (member.isRightFooted) {
+                        id = if (member.rightFooted) {
                             R.drawable.right_footed
                         } else R.drawable.left_footed
                     ),
                     contentDescription = null,
-                    modifier = Modifier.size(40.dp)
                 )
             }
         }

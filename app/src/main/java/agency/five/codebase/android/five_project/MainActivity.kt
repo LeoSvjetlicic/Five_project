@@ -1,6 +1,10 @@
 package agency.five.codebase.android.five_project
 
+import agency.five.codebase.android.five_project.data.competitionRepository.di.competitionModule
 import agency.five.codebase.android.five_project.data.di.dataModule
+import agency.five.codebase.android.five_project.data.di.databaseModule
+import agency.five.codebase.android.five_project.data.di.firebaseModule
+import agency.five.codebase.android.five_project.data.teamRepository.di.teamModule
 import agency.five.codebase.android.five_project.ui.competitiondetails.di.competitionDetailsModule
 import agency.five.codebase.android.five_project.ui.followed.di.followedModule
 import agency.five.codebase.android.five_project.ui.home.di.homeModule
@@ -23,9 +27,13 @@ class MainActivity : Application() {
                 followedModule,
                 competitionDetailsModule,
                 homeModule,
-                teamDetailsModule
+                teamDetailsModule,
+                teamModule,
+                competitionModule,
+                databaseModule,
+                firebaseModule
             )
-            Log.d("MovieApp", "App started")
+            Log.d("CompetitionApp", "App started")
         }
     }
 }
