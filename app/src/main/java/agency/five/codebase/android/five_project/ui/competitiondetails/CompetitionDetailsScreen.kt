@@ -6,6 +6,7 @@ import agency.five.codebase.android.five_project.ui.components.TeamCard
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -25,7 +26,7 @@ import coil.compose.AsyncImage
 @Composable
 fun CompetitionDetailsRoute(
     viewModel: CompetitionDetailsViewModel,
-    onTeamCardClick: () -> Unit,
+    onTeamCardClick: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val competitionDetailsViewState: CompetitionDetailsViewState by viewModel.competitionDetailsViewState.collectAsState()
@@ -40,7 +41,7 @@ fun CompetitionDetailsRoute(
 @Composable
 fun CompetitionDetailsScreen(
     competitionDetailsViewState: CompetitionDetailsViewState,
-    onTeamCardClick: () -> Unit = {},
+    onTeamCardClick: (Int) -> Unit = {},
     onFollowButtonCLick: (Int) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
@@ -125,10 +126,10 @@ fun CompetitionDetailsScreen(
                 )
             }
         }
-        items(competitionDetailsViewState.teamViewStates.size) { index ->
+        items(competitionDetailsViewState.teamViewStates) {
             TeamCard(
-                team = competitionDetailsViewState.teamViewStates[index],
-                onTeamCardClick = { onTeamCardClick() },
+                team = it,
+                onTeamCardClick = { onTeamCardClick(it.id) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(70.dp)

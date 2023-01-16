@@ -114,17 +114,6 @@ fun MainScreen() {
                     )
                 }
                 composable(
-                    route = TeamDetailsDestination.route,
-                    arguments = listOf(navArgument(TEAM_ID) { type = NavType.IntType })
-                ) {
-                    val teamId = it.arguments?.getInt(TEAM_ID)
-                    val viewModel =
-                        getViewModel<TeamDetailsViewModel>(parameters = {
-                            parametersOf(teamId)
-                        })
-                    TeamDetailsRoute(viewModel)
-                }
-                composable(
                     route = CompetitionDetailsDestination.route,
                     arguments = listOf(navArgument(COMPETITION_ID) { type = NavType.IntType })
                 ) {
@@ -134,13 +123,26 @@ fun MainScreen() {
                             parametersOf(competitionId)
                         })
                     CompetitionDetailsRoute(
-                        onTeamCardClick = {
+                        viewModel = viewModel,
+                        onTeamCardClick = { index ->
                             navController.navigate(
-                                TeamDetailsDestination.createNavigationRoute(2)
+                                TeamDetailsDestination.createNavigationRoute(
+                                    index
+                                )
                             )
-                        },
-                        viewModel = viewModel
+                        }
                     )
+                }
+                composable(
+                    route = TeamDetailsDestination.route,
+                    arguments = listOf(navArgument(TEAM_ID) { type = NavType.IntType })
+                ) {
+                    val teamId = it.arguments?.getInt(TEAM_ID)
+                    val viewModel =
+                        getViewModel<TeamDetailsViewModel>(parameters = {
+                            parametersOf(teamId)
+                        })
+                    TeamDetailsRoute(viewModel)
                 }
             }
         }
