@@ -55,14 +55,10 @@ fun HomeScreen(
             text = stringResource(id = R.string.competitions),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(5.dp)
-                .clip(RoundedCornerShape(60.dp))
-                .background(colorResource(id = R.color.light_blue))
-                .padding(start = 10.dp, end = 10.dp),
-            textAlign = TextAlign.Center,
+                .padding(top = 5.dp, bottom = 5.dp),
+            textAlign = TextAlign.Start,
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White
         )
         //SearchBar(modifier = Modifier.height(65.dp), onSearchButtonClick = onSearchButtonClick)
         LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -73,6 +69,7 @@ fun HomeScreen(
                     onFollowButtonClick = { onFollowButtonClick(competition.id) },
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(top = 10.dp)
                         .height(70.dp)
                 )
             }

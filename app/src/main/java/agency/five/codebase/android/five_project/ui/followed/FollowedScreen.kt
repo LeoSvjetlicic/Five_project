@@ -49,14 +49,11 @@ fun FollowedScreen(
             text = stringResource(id = R.string.followed_screen),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(5.dp)
                 .clip(RoundedCornerShape(60.dp))
-                .background(colorResource(id = R.color.light_blue))
-                .padding(start = 10.dp, end = 10.dp),
-            textAlign = TextAlign.Center,
+                .padding(top = 5.dp, bottom = 5.dp),
+            textAlign = TextAlign.Start,
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White
         )
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(followedViewState.competitionCardViewStates) {
@@ -66,6 +63,7 @@ fun FollowedScreen(
                     onFollowButtonClick = { onFollowButtonCLick(it.id) },
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(top = 10.dp)
                         .height(70.dp)
                 )
             }

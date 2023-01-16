@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -37,7 +38,7 @@ fun MemberCard(
     modifier: Modifier,
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier.shadow(elevation = 5.dp, shape = RoundedCornerShape(10.dp)),
         border = BorderStroke(
             2.dp,
             brush = Brush.horizontalGradient(
@@ -60,8 +61,8 @@ fun MemberCard(
                 modifier = Modifier
                     .padding(8.dp)
                     .clip(RoundedCornerShape(10.dp))
-                    .fillMaxHeight()
-                    .width(80.dp),
+                    .width(80.dp)
+                    .fillMaxSize(),
                 contentScale = ContentScale.Fit
             )
             Column(

@@ -37,7 +37,6 @@ fun CompetitionCard(
     Card(
         shape = RoundedCornerShape(10.dp),
         modifier = modifier
-            .padding(4.dp)
             .clickable { onCompetitionCardClick() }
             .height(70.dp)
             .shadow(elevation = 5.dp, shape = RoundedCornerShape(10.dp)),

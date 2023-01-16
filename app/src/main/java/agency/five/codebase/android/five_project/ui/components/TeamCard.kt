@@ -43,7 +43,6 @@ fun TeamCard(
     Card(
         shape = RoundedCornerShape(10.dp),
         modifier = modifier
-            .padding(4.dp)
             .clickable { onTeamCardClick() }
             .height(70.dp)
             .shadow(elevation = 5.dp, shape = RoundedCornerShape(10.dp)),

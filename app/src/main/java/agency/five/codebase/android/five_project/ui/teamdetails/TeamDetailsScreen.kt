@@ -68,7 +68,8 @@ fun TeamDetailScreen(
                                 colorResource(id = R.color.light_blue)
                             )
                         )
-                    ),
+                    )
+                    .padding(start = 16.dp, end = 16.dp),
             ) {
                 Text(
                     text = teamDetailsViewState.teamCardViewState.name,
@@ -86,10 +87,9 @@ fun TeamDetailScreen(
                     fontSize = 20.sp,
                     color = Color.White,
                     modifier = Modifier
-                        .padding(5.dp)
-                        .padding(start = 5.dp)
+                        .padding(top = 5.dp)
                         .align(Alignment.Start),
-                    textDecoration = TextDecoration.Underline
+                    fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = teamDetailsViewState.teamCardViewState.description,
@@ -97,7 +97,7 @@ fun TeamDetailScreen(
                     color = Color.White,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 10.dp, top = 5.dp, bottom = 5.dp, end = 10.dp)
+                        .padding(top = 5.dp, bottom = 5.dp)
                         .align(Alignment.CenterHorizontally),
                     textAlign = TextAlign.Start
                 )
@@ -108,11 +108,10 @@ fun TeamDetailScreen(
                 text = stringResource(id = R.string.members),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp)
+                    .padding(top=5.dp, bottom = 5.dp)
                     .clip(RoundedCornerShape(60.dp))
-                    .background(colorResource(id = R.color.light_blue))
-                    .padding(start = 10.dp, end = 10.dp),
-                textAlign = TextAlign.Center,
+                    .padding(start = 16.dp, end = 16.dp),
+                textAlign = TextAlign.Start,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -120,7 +119,9 @@ fun TeamDetailScreen(
         item {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                modifier = Modifier.height(500.dp)
+                modifier = Modifier
+                    .height(500.dp)
+                    .padding(start = 16.dp, end = 11.dp)
             ) {
                 items(teamDetailsViewState.memberViewStates) { member ->
                     MemberCard(
@@ -132,7 +133,7 @@ fun TeamDetailScreen(
                             rightFooted = member.rightFooted
                         ),
                         modifier = Modifier
-                            .padding(5.dp)
+                            .padding(top = 5.dp, end = 5.dp)
                             .fillMaxWidth()
                             .height(100.dp),
                     )

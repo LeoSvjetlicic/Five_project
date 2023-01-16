@@ -28,7 +28,7 @@ fun FollowButton(
         ),
         contentDescription = null,
         modifier = modifier
-            .padding(5.dp)
+            .padding(top=5.dp, bottom = 5.dp)
             .clickable { onFollowButtonClick() }
     )
 }

@@ -78,6 +78,7 @@ fun CompetitionDetailsScreen(
                             )
                         )
                     )
+                    .padding(start = 16.dp, end = 16.dp)
                     .clip(RoundedCornerShape(0.dp, 0.dp, 20.dp, 20.dp)),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -86,15 +87,13 @@ fun CompetitionDetailsScreen(
                     fontSize = 25.sp,
                     color = Color.White,
                     modifier = Modifier
-                        .padding(start = 10.dp)
                         .align(Alignment.CenterVertically),
                 )
                 FollowButton(
                     isFollowed = competitionDetailsViewState.competitionCardViewState.isFollowed,
                     modifier = Modifier
                         .size(50.dp)
-                        .align(Alignment.CenterVertically)
-                        .padding(end = 5.dp),
+                        .align(Alignment.CenterVertically),
                     onFollowButtonClick = { onFollowButtonCLick(competitionDetailsViewState.id) }
                 )
             }
@@ -103,10 +102,7 @@ fun CompetitionDetailsScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp)
-                    .clip(RoundedCornerShape(60.dp))
-                    .background(color = colorResource(id = R.color.light_blue))
-                    .padding(start = 10.dp, end = 10.dp),
+                    .padding(top = 10.dp, start = 20.dp, end = 20.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
@@ -132,6 +128,7 @@ fun CompetitionDetailsScreen(
                 onTeamCardClick = { onTeamCardClick(it.id) },
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(top = 10.dp, start = 16.dp, end = 16.dp)
                     .height(70.dp)
             )
         }

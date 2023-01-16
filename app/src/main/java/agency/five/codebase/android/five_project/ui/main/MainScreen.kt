@@ -100,7 +100,8 @@ fun MainScreen() {
                                 CompetitionDetailsDestination.createNavigationRoute(it)
                             )
                         },
-                        homeViewModel = getViewModel()
+                        homeViewModel = getViewModel(),
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
                     )
                 }
                 composable(NavigationItem.FollowedDestination.route) {
@@ -110,7 +111,8 @@ fun MainScreen() {
                                 CompetitionDetailsDestination.createNavigationRoute(it)
                             )
                         },
-                        followedScreenViewModel = getViewModel()
+                        followedScreenViewModel = getViewModel(),
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
                     )
                 }
                 composable(
@@ -126,11 +128,9 @@ fun MainScreen() {
                         viewModel = viewModel,
                         onTeamCardClick = { index ->
                             navController.navigate(
-                                TeamDetailsDestination.createNavigationRoute(
-                                    index
-                                )
+                                TeamDetailsDestination.createNavigationRoute(index)
                             )
-                        }
+                        },
                     )
                 }
                 composable(
