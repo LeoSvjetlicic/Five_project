@@ -64,7 +64,9 @@ class CompetitionRepositoryImpl(
     }.flatMapLatest {
         val teams = competitionService.fetchTeams()
             .filter { it.league == findCompetition(competitionId).name }
-            .sortedBy { it.position }
+            .sortedBy {
+                it.position.toInt()
+            }
         competitionDao.followed().map { follow ->
             it.toCompetitionDetails(
                 isFollowed = follow.any { it.id == competitionId },
