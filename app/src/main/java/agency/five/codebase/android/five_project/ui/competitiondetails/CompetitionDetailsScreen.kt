@@ -102,7 +102,7 @@ fun CompetitionDetailsScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 10.dp, start = 20.dp, end = 20.dp),
+                    .padding(top = 10.dp, start = 20.dp, end = 20.dp, bottom = 10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
@@ -128,7 +128,7 @@ fun CompetitionDetailsScreen(
                 onTeamCardClick = { onTeamCardClick(it.id) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 10.dp, start = 16.dp, end = 16.dp)
+                    .padding(bottom = 10.dp, start = 16.dp, end = 16.dp)
                     .height(70.dp)
             )
         }

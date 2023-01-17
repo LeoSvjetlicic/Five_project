@@ -60,7 +60,6 @@ fun TeamDetailScreen(
                 modifier = Modifier
                     .wrapContentHeight()
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(0.dp, 0.dp, 20.dp, 20.dp))
                     .background(
                         brush = Brush.horizontalGradient(
                             colors = listOf(
@@ -97,7 +96,7 @@ fun TeamDetailScreen(
                     color = Color.White,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 5.dp, bottom = 5.dp)
+                        .padding(top = 5.dp, bottom = 10.dp)
                         .align(Alignment.CenterHorizontally),
                     textAlign = TextAlign.Start
                 )
@@ -108,8 +107,7 @@ fun TeamDetailScreen(
                 text = stringResource(id = R.string.members),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top=5.dp, bottom = 5.dp)
-                    .clip(RoundedCornerShape(60.dp))
+                    .padding(top = 5.dp, bottom = 10.dp)
                     .padding(start = 16.dp, end = 16.dp),
                 textAlign = TextAlign.Start,
                 fontSize = 30.sp,
@@ -133,7 +131,7 @@ fun TeamDetailScreen(
                             rightFooted = member.rightFooted
                         ),
                         modifier = Modifier
-                            .padding(top = 5.dp, end = 5.dp)
+                            .padding(end = 5.dp, bottom = 10.dp)
                             .fillMaxWidth()
                             .height(100.dp),
                     )

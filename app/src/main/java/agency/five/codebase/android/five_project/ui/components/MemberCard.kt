@@ -63,7 +63,7 @@ fun MemberCard(
                     .clip(RoundedCornerShape(10.dp))
                     .width(80.dp)
                     .fillMaxSize(),
-                contentScale = ContentScale.Fit
+                contentScale = ContentScale.Crop
             )
             Column(
                 verticalArrangement = Arrangement.SpaceEvenly,

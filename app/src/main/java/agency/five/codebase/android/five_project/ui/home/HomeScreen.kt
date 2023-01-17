@@ -55,7 +55,7 @@ fun HomeScreen(
             text = stringResource(id = R.string.competitions),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 5.dp, bottom = 5.dp),
+                .padding(top = 5.dp, bottom = 10.dp),
             textAlign = TextAlign.Start,
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
@@ -69,7 +69,7 @@ fun HomeScreen(
                     onFollowButtonClick = { onFollowButtonClick(competition.id) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 10.dp)
+                        .padding(bottom = 10.dp)
                         .height(70.dp)
                 )
             }
