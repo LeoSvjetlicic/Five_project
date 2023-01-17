@@ -1,17 +1,13 @@
 package agency.five.codebase.android.five_project.ui.main
 
 import agency.five.codebase.android.five_project.R
-import agency.five.codebase.android.five_project.data.teamRepository.di.teamModule
 import agency.five.codebase.android.five_project.navigation.*
 import agency.five.codebase.android.five_project.ui.competitiondetails.CompetitionDetailsRoute
 import agency.five.codebase.android.five_project.ui.competitiondetails.CompetitionDetailsViewModel
 import agency.five.codebase.android.five_project.ui.followed.FollowedScreenRoute
-import agency.five.codebase.android.five_project.ui.followed.FollowedScreenViewModel
 import agency.five.codebase.android.five_project.ui.home.HomeScreenRoute
-import agency.five.codebase.android.five_project.ui.home.HomeViewModel
 import agency.five.codebase.android.five_project.ui.teamdetails.TeamDetailsRoute
 import agency.five.codebase.android.five_project.ui.teamdetails.TeamDetailsViewModel
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,7 +24,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination
@@ -39,7 +34,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.google.firebase.FirebaseApp
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -101,7 +95,13 @@ fun MainScreen() {
                             )
                         },
                         homeViewModel = getViewModel(),
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+                        modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                        onSearchButtonClick = {
+                            if (it != null)
+                                navController.navigate(
+                                    CompetitionDetailsDestination.createNavigationRoute(it)
+                                )
+                        }
                     )
                 }
                 composable(NavigationItem.FollowedDestination.route) {

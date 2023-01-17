@@ -2,7 +2,10 @@ package agency.five.codebase.android.five_project.ui.components
 
 import agency.five.codebase.android.five_project.R
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -28,14 +31,12 @@ fun SearchBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(
-                    horizontal = 10.dp,
-                    vertical = 5.dp
-                ),
+                .padding(top = 5.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             OutlinedTextField(
+                modifier = Modifier.padding(end = 10.dp),
                 value = query,
                 onValueChange = {
                     query = it
@@ -55,7 +56,7 @@ fun SearchBar(
                 )
             )
             Button(
-                onClick = { onSearchButtonClick(query.toString()) },
+                onClick = { onSearchButtonClick(query.text) },
                 shape = CircleShape,
                 modifier = Modifier.padding(top = 7.dp),
                 colors = ButtonDefaults.buttonColors(
