@@ -48,7 +48,9 @@ fun HomeScreen(
     ) {
         SearchBar(modifier = Modifier.height(65.dp), onSearchButtonClick = { name ->
             val search =
-                competitions.competitionViewStates.filter { it.competitionCardViewState.name == name }
+                competitions.competitionViewStates.filter {
+                    it.competitionCardViewState.name.toLowerCase().equals(name, ignoreCase = true)
+                }
             onSearchButtonClick(
                 if (search.isNotEmpty()) {
                     search.first().id

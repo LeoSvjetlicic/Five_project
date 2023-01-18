@@ -61,9 +61,10 @@ fun CompetitionCard(
                 model = competition.imageUrl,
                 contentDescription = null,
                 modifier = Modifier
+                    .size(60.dp)
                     .padding(5.dp)
-                    .clip(RoundedCornerShape(10.dp)),
-                contentScale = ContentScale.FillHeight,
+                    .clip(RoundedCornerShape(3.dp)),
+                contentScale = ContentScale.Fit,
             )
             Text(
                 modifier = Modifier,
